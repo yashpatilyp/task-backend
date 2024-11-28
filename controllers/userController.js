@@ -12,7 +12,7 @@ export const Register = async (req, res) => {
   try {
     const { name, username, email, password } = req.body;
 
-    // Validate required fields
+    
     if (!name || !username || !email || !password) {
       return res.status(400).json({
         message: "All fields are required",
@@ -20,7 +20,7 @@ export const Register = async (req, res) => {
       });
     }
 
-    // Check if user exists by email
+ 
     const existingUserByEmail = await User.findOne({ email });
     if (existingUserByEmail) {
       return res.status(401).json({
@@ -29,7 +29,7 @@ export const Register = async (req, res) => {
       });
     }
 
-    // Check if user exists by username
+    
     const existingUserByUsername = await User.findOne({ username });
     if (existingUserByUsername) {
       return res.status(401).json({
@@ -38,10 +38,10 @@ export const Register = async (req, res) => {
       });
     }
 
-    // Hash password
+   
     const hashedPassword = await bcryptjs.hash(password, 16);
 
-    // Create the user
+   
     const newUser = await User.create({
       name,
       username,
@@ -49,14 +49,14 @@ export const Register = async (req, res) => {
       password: hashedPassword,
     });
 
-    // Generate a JWT token
+
     const token = jwt.sign(
       { _id: newUser._id, isAdmin: newUser.isAdmin || false },
       process.env.JWT_SECRET,
-      { expiresIn: "1d" } // Token valid for 1 day
+      { expiresIn: "1d" } 
     );
 
-    // User info to include in the response
+    
     const userInfo = {
       _id: newUser._id,
       name: newUser.name,

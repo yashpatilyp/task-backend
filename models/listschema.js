@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-
+// list schema
 const listSchema = new mongoose.Schema({
   productname: {
     type: String,

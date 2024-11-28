@@ -1,28 +1,28 @@
-import { List } from '../models/listSchema.js'; // Import the List model
+import { List } from '../models/listSchema.js'; 
 
-// Add a new product to the list
+
 export const addProduct = async (req, res) => {
           try {
             const { productname, quantity, description, rate, userId } = req.body;
         
-            // Validate if all required fields are provided
+           
             if (!productname || !quantity || !description || !rate || !userId) {
               return res.status(400).json({ message: 'All fields are required' });
             }
         
-            // Ensure quantity is a valid number
+          
             const numericQuantity = parseInt(quantity, 10);
             if (isNaN(numericQuantity)) {
               return res.status(400).json({ message: 'Quantity must be a valid number' });
             }
         
-            // Log the incoming request data for debugging
+         
             console.log("Incoming Product Data:", req.body);
         
-            // Create a new product
+           
             const newProduct = new List({
               productname,
-              quantity: numericQuantity, // Ensure quantity is saved as a number
+              quantity: numericQuantity, 
               description,
               rate,
               userId
@@ -37,17 +37,16 @@ export const addProduct = async (req, res) => {
           }
         };
         
-// Fetch all products for a specific user
 export const getUserProducts = async (req, res) => {
   try {
-    // Assuming userId is passed in the request body or extracted from JWT
-    const userId = req.params.userId; // Get userId from params
+    
+    const userId = req.params.userId; 
 
     if (!userId) {
       return res.status(400).json({ message: 'User ID is required' });
     }
 
-    // Fetch all products by the userId (assuming userId is stored in the List schema)
+    
     const products = await List.find({ userId });
 
     if (!products || products.length === 0) {
@@ -69,12 +68,12 @@ export const deleteProduct = async (req, res) => {
           try {
             const { id } = req.params;
         
-            // Check if the product ID is provided
+           
             if (!id) {
               return res.status(400).json({ message: "Product ID is required" });
             }
         
-            // Find and delete the product
+         
             const deletedProduct = await List.findByIdAndDelete(id);
         
             if (!deletedProduct) {
@@ -96,12 +95,11 @@ export const updateProduct = async (req, res) => {
             const { productId } = req.params;
             const { productname, description, quantity, rate } = req.body;
         
-            // Validate required fields
+         
             if (!productname || !description || !quantity || !rate) {
               return res.status(400).json({ message: "All fields are required" });
             }
         
-            // Find and update the product
             const updatedProduct = await List.findByIdAndUpdate(
               productId,
               { productname, description, quantity, rate },
