@@ -9,7 +9,7 @@ import userRoute from './routes/userRoute.js';
 import listRoute from './routes/listRoute.js';
 
 
-// Load environment variables
+
 dotenv.config({
   path: '.env'
 });
@@ -20,12 +20,12 @@ dbConnect();
 const app = express();
 
 // Middleware
-app.use(express.json()); // Parse JSON bodies
+app.use(express.json()); 
 
 
 const corsOptions = {
   origin: 'http://localhost:3000',  // Frontend origin
-  credentials: true,  // Allow credentials (cookies)
+  credentials: true, 
 };
 
 app.use(cors(corsOptions));

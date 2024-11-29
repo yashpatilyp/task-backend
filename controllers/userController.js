@@ -109,7 +109,7 @@ export const Login = async (req, res) => {
       });
     }
 
-    // Generate a JWT token for authentication
+    
     const jwtToken = jwt.sign({ _id: user._id }, process.env.JWT_SECRET);
    
     const userInfo = {  
